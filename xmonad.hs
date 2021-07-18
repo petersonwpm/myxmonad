@@ -73,7 +73,7 @@ myConfig = def
   [ ("M-S-z", spawn "xscreensaver-command -lock")
   , ("M-S-=", unGrab *> spawn "scrot -s"        )
   , ("M-]"  , spawn "firefox"                   )
-  , ("M-C-+", sendMessage MagnifyMore           )
-  , ("M-C--", sendMessage MagnifyLess           )
+  , ("M-S-+", spawn "xbacklight -inc 5"         )
+  , ("M-S--", spawn "xbacklight -dec 5"         )
   ]
 
