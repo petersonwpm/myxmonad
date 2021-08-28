@@ -16,9 +16,9 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Loggers
 
 main::IO()
-main = xmonad 
-     . ewmhFullscreen 
-     . ewmh 
+main = xmonad
+     . ewmhFullscreen
+     . ewmh
      . withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) toggleStrutsKey
      $ myConfig
   where
@@ -64,10 +64,14 @@ myLayout = threeColMid ||| tiled ||| Mirror tiled ||| Full
     delta       = 3/300  -- Default proportion of screen occupied by main pane
     ratio       = 1/2    -- Percent of screen to increment by when resizing panes
 
+myTerminal::String
+myTerminal = "urxvt"
+
 myConfig = def
-  { modMask    = mod1Mask     -- Rebind Mod to the Super Key
+  { modMask    = mod4Mask     -- Rebind Mod to the Super Key
   , layoutHook = myLayout     -- Use custom layouts
   , manageHook = myManageHook -- Match on certain windows
+  , terminal = myTerminal
   }
   `additionalKeysP`
   [ ("M-S-z", spawn "xscreensaver-command -lock")
@@ -75,5 +79,23 @@ myConfig = def
   , ("M-]"  , spawn "firefox"                   )
   , ("M-S-+", spawn "xbacklight -inc 5"         )
   , ("M-S--", spawn "xbacklight -dec 5"         )
+
+  -- screen configuration
+  , ("M-o 0", spawn "xrandr --output eDP-1 --auto --output HDMI-1 --auto --top-of eDP-1")
+  , ("M-o 1", spawn "xrandr --output eDP-1 --auto --output HDMI-1 --off --top-of eDP-1")
+  , ("M-o 2", spawn "xrandr --output eDP-1 --off --output HDMI-1 --auto --top-of eDP-1")
+
+  , ("<XF86AudioPlay>",        spawn "playerctl play-pause")
+  , ("<XF86AudioPrev>",        spawn "playerctl previous")
+  , ("<XF86AudioNext>",        spawn "playerctl next")
+  , ("<XF86AudioMute>",        spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
+  , ("<XF86AudioMicMute>" ,    spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+  , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+  , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+  , ("<XF86HomePage>"        , spawn "firefox")
+  , ("<XF86Search>",           safeSpawn "firefox" ["https://www.duckduckgo.com/"])
+  , ("<XF86Mail>",             runOrRaise "geary" (resource =? "thunderbird"))
+  , ("<XF86Calculator>",       runOrRaise "gcalctool" (resource =? "gcalctool"))
+  , ("<XF86Eject>",            spawn "toggleeject")
   ]
 
