@@ -77,14 +77,14 @@ myConfig = def
   [ ("M-S-z", spawn "xscreensaver-command -lock")
   , ("M-S-=", unGrab *> spawn "scrot -s"        )
   , ("M-]"  , spawn "firefox"                   )
-  , ("M-S-+", spawn "xbacklight -inc 5"         )
-  , ("M-S--", spawn "xbacklight -dec 5"         )
+  , ("M-m",  spawn "urxvt -e spt")
 
   -- screen configuration
-  , ("M-o 0", spawn "xrandr --output eDP-1 --auto --output HDMI-1 --auto --top-of eDP-1")
-  , ("M-o 1", spawn "xrandr --output eDP-1 --auto --output HDMI-1 --off --top-of eDP-1")
-  , ("M-o 2", spawn "xrandr --output eDP-1 --off --output HDMI-1 --auto --top-of eDP-1")
+  , ("M-o-0", spawn "xrandr --output eDP1 --auto --output HDMI1 --auto --top-of eDP-1")
+  , ("M-o 1", spawn "xrandr --output eDP1 --auto --output HDMI1 --off --top-of eDP-1")
+  , ("M-o 2", spawn "xrandr --output eDP1 --off --output HDMI1 --auto --top-of eDP-1")
 
+  -- audio configuration
   , ("<XF86AudioPlay>",        spawn "playerctl play-pause")
   , ("<XF86AudioPrev>",        spawn "playerctl previous")
   , ("<XF86AudioNext>",        spawn "playerctl next")
@@ -93,9 +93,12 @@ myConfig = def
   , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
   , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
   , ("<XF86HomePage>"        , spawn "firefox")
-  , ("<XF86Search>",           safeSpawn "firefox" ["https://www.duckduckgo.com/"])
-  , ("<XF86Mail>",             runOrRaise "geary" (resource =? "thunderbird"))
-  , ("<XF86Calculator>",       runOrRaise "gcalctool" (resource =? "gcalctool"))
+  -- , ("<XF86Search>",           safeSpawn "firefox" ["https://www.duckduckgo.com/"])
+  -- , ("<XF86Mail>",             runOrRaise "geary" (resource =? "thunderbird"))
+  -- , ("<XF86Calculator>",       runOrRaise "gcalctool" (resource =? "gcalctool"))
   , ("<XF86Eject>",            spawn "toggleeject")
+
+  , ("<XF86MonBrightnessUp>",   spawn "xbacklight -inc 5")
+  , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 5")
   ]
 
