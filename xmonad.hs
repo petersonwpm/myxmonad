@@ -28,6 +28,7 @@ main = xmonad
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ isDialog --> doFloat
+  , title =? "Picture-in-Picture" --> doFloat
   ]
 
 myXmobarPP :: PP
@@ -78,6 +79,9 @@ myConfig = def
   , ("M-S-=", unGrab *> spawn "scrot -s"        )
   , ("M-]"  , spawn "firefox"                   )
   , ("M-m",  spawn "urxvt -e spt")
+
+  -- laucher
+  , ("<F2>", spawn "gmrun")
 
   -- screen configuration
   , ("M-o-0", spawn "xrandr --output eDP1 --auto --output HDMI1 --auto --top-of eDP-1")
